@@ -178,7 +178,7 @@
 <class number="0" name="default" width="0" drill="0">
 </class>
 </classes>
-<designrules name="default">
+<designrules name="default *">
 <description language="de">&lt;b&gt;EAGLE Design Rules&lt;/b&gt;
 &lt;p&gt;
 Die Standard-Design-Rules sind so gewählt, dass sie für 
@@ -207,11 +207,11 @@ design rules under a new name.</description>
 <param name="mdSmdSmd" value="8mil"/>
 <param name="mdViaViaSameLayer" value="8mil"/>
 <param name="mnLayersViaInSmd" value="2"/>
-<param name="mdCopperDimension" value="40mil"/>
+<param name="mdCopperDimension" value="20mil"/>
 <param name="mdDrill" value="8mil"/>
 <param name="mdSmdStop" value="0mil"/>
-<param name="msWidth" value="10mil"/>
-<param name="msDrill" value="24mil"/>
+<param name="msWidth" value="8mil"/>
+<param name="msDrill" value="20mil"/>
 <param name="msMicroVia" value="9.99mm"/>
 <param name="msBlindViaRatio" value="0.5"/>
 <param name="rvPadTop" value="0.25"/>
@@ -433,9 +433,6 @@ design rules under a new name.</description>
 <wire x1="23.2664" y1="16.4592" x2="26.0096" y2="16.4592" width="0.3048" layer="1"/>
 <wire x1="26.0096" y1="16.4592" x2="28.0416" y2="14.4272" width="0.3048" layer="1"/>
 <wire x1="28.0416" y1="14.4272" x2="45.5168" y2="14.4272" width="0.3048" layer="1"/>
-<wire x1="45.5168" y1="14.4272" x2="49.3776" y2="18.288" width="0.3048" layer="1"/>
-<wire x1="49.3776" y1="18.288" x2="49.3776" y2="30.1624" width="0.3048" layer="1"/>
-<wire x1="49.3776" y1="30.1624" x2="49.06" y2="30.48" width="0.3048" layer="1"/>
 <wire x1="49.06" y1="30.48" x2="49.06" y2="38.1" width="0.3048" layer="1"/>
 <wire x1="49.06" y1="38.1" x2="49.06" y2="45.72" width="0.3048" layer="1"/>
 <wire x1="49.06" y1="45.72" x2="49.06" y2="46.8504" width="0.3048" layer="1"/>
@@ -450,6 +447,8 @@ design rules under a new name.</description>
 <wire x1="37.427" y1="32.385" x2="37.592" y2="32.22" width="0.3048" layer="1"/>
 <wire x1="35.56" y1="32.385" x2="29.9974" y2="32.385" width="0.3048" layer="1"/>
 <wire x1="29.9974" y1="32.385" x2="27.8892" y2="34.4932" width="0.3048" layer="1"/>
+<wire x1="49.06" y1="30.48" x2="49.06" y2="17.9704" width="0.3048" layer="1"/>
+<wire x1="49.06" y1="17.9704" x2="45.5168" y2="14.4272" width="0.3048" layer="1"/>
 </signal>
 <signal name="GND">
 <contactref element="D4" pad="-"/>
@@ -513,6 +512,13 @@ design rules under a new name.</description>
 <wire x1="28.7528" y1="26.3144" x2="26.416" y2="23.9776" width="0.3048" layer="1"/>
 <wire x1="26.416" y1="23.9776" x2="26.416" y2="17.4116" width="0.3048" layer="1"/>
 <wire x1="26.416" y1="17.4116" x2="26.3144" y2="17.31" width="0.3048" layer="1"/>
+<polygon width="0.2032" layer="1" orphans="yes">
+<vertex x="13.0048" y="50.9016"/>
+<vertex x="50.6984" y="50.9016"/>
+<vertex x="50.8" y="12.7"/>
+<vertex x="12.8016" y="12.7"/>
+<vertex x="12.4968" y="49.8856"/>
+</polygon>
 </signal>
 <signal name="N$1">
 <contactref element="U1" pad="P$1"/>
