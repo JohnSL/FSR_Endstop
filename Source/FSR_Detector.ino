@@ -12,20 +12,22 @@
 #define FSR2        A1
 #define FSR3        A2
 
-short fsrLeds[] = { LED1, LED2, LED3 };
-short fsrPins[] = {FSR1, FSR2, FSR3 };
+
+short fsrLeds[] = { LED1, LED2, LED3 };     // Pins for each of the LEDs next to the FSR inputs
+short fsrPins[] = { FSR1, FSR2, FSR3 };     // Pins for each of the FSR analog inputs
 
 #define SHORT_SIZE 10
 #define LONG_SIZE 20
 #define LONG_INTERVAL (2000 / LONG_SIZE)
 
 unsigned long lastLongTime[3];
-int longSamples[3][LONG_SIZE];          // Used to keep a long-term average
-int longIndex[3] = {0, 0, 0};
-int longAverage[3] = {0, 0, 0};
+uint16_t longSamples[3][LONG_SIZE];         // Used to keep a long-term average
+uint8_t longIndex[3] = {0, 0, 0};
+uint16_t longAverage[3] = {0, 0, 0};
 
-int shortSamples[3][SHORT_SIZE];        // Used to create an average of the most recent samples
+uint16_t shortSamples[3][SHORT_SIZE];       // Used to create an average of the most recent samples
 uint8_t averageIndex[3] = {0, 0, 0};
+bool triggered[3] = {false};
 
 void SetOutput(short fsr, bool state)
 {
@@ -34,21 +36,17 @@ void SetOutput(short fsr, bool state)
 
 void InitValues()
 {
-    for (short j = 0; j < 3; j++)
+    for (uint8_t fsr = 0; fsr < 3; fsr++)
     {
-        for (short i = 0; i < SHORT_SIZE; i++)
-        {
-            shortSamples[j][i] = 0;
-        }
+        for (uint8_t i = 0; i < SHORT_SIZE; i++)
+            shortSamples[fsr][i] = 0;
 
-        for (int i = 0; i < LONG_SIZE; i++)
-        {
-            longSamples[j][i] = 0;
-        }
+        for (uint8_t i = 0; i < LONG_SIZE; i++)
+            longSamples[fsr][i] = 0;
     }
 
-    for (short i = 0; i < 3; i++)
-        lastLongTime[i] = millis();
+    for (uint8_t fsr = 0; fsr < 3; fsr++)
+        lastLongTime[fsr] = millis();
 }
 
 //
@@ -58,16 +56,16 @@ void setup()
 {
     InitValues();
 
-    for (short i = 0; i < 3; i++)
+    for (uint8_t fsr = 0; fsr < 3; fsr++)
     {
         // Set the FSR LEDs for output and turn them off
-        short pin = fsrLeds[i];
+        uint8_t pin = fsrLeds[fsr];
         pinMode(pin, OUTPUT);
         digitalWrite(pin, LOW);
 
         // Set the FSR lines for inputs without a pull-up since the board has external 10K
         // pull-up resistors.
-        pin = fsrPins[i];
+        pin = fsrPins[fsr];
         pinMode(pin, INPUT);
     }
 
@@ -81,7 +79,7 @@ void setup()
 // Captures a new value once LONG_INTERVAL ms have passed since the last sample.
 //
 // Returns: The current long-range average
-int UpdateLongSamples(short fsr, int avg)
+uint16_t UpdateLongSamples(short fsr, int avg)
 {
     unsigned long current = millis();
     if (current - lastLongTime[fsr] <= LONG_INTERVAL)
@@ -95,7 +93,7 @@ int UpdateLongSamples(short fsr, int avg)
         longIndex[fsr] = 0;
     }
 
-    int total = 0;
+    uint16_t total = 0;
     for (int i = 0; i < LONG_SIZE; i++)
     {
         total += longSamples[fsr][i];
@@ -109,16 +107,16 @@ int UpdateLongSamples(short fsr, int avg)
 
 void CalculateThreshold(short fsr)
 {
-    int avg = 0;
+    uint16_t avg = 0;
     for (int i = 0; i < SHORT_SIZE; i++)
     {
         avg += shortSamples[fsr][i];
     }
-    int value = avg / SHORT_SIZE;
+    uint16_t value = avg / SHORT_SIZE;
 
-    int longAverage = UpdateLongSamples(fsr, value);
+    uint16_t longAverage = UpdateLongSamples(fsr, value);
 
-    int threshold = 0.9 * longAverage;
+    uint16_t threshold = 0.9 * longAverage;
 
     bool triggered = value < threshold;
     SetOutput(fsr, triggered);
@@ -130,7 +128,7 @@ void loop()
     {
         int value = analogRead(fsrPins[fsr]);
         shortSamples[fsr][averageIndex[fsr]++] = value;
-        if (averageIndex[fsr] >= 8)
+        if (averageIndex[fsr] >= SHORT_SIZE)
             averageIndex[fsr] = 0;
 
         if (averageIndex[fsr] == 7)
