@@ -12,26 +12,38 @@
 #define FSR2        A1
 #define FSR3        A2
 
+// The end stop output
+#define TRIGGER     03
 
 short fsrLeds[] = { LED1, LED2, LED3 };     // Pins for each of the LEDs next to the FSR inputs
 short fsrPins[] = { FSR1, FSR2, FSR3 };     // Pins for each of the FSR analog inputs
 
-#define SHORT_SIZE 10
-#define LONG_SIZE 20
+#define SHORT_SIZE 8
+#define LONG_SIZE 16
 #define LONG_INTERVAL (2000 / LONG_SIZE)
 
-unsigned long lastLongTime[3];
+unsigned long lastLongTime[3];              // Last time in millis that we captured a long-term sample
 uint16_t longSamples[3][LONG_SIZE];         // Used to keep a long-term average
-uint8_t longIndex[3] = {0, 0, 0};
+uint8_t longIndex[3] = {0, 0, 0};           // Index of the last long-term sample
 uint16_t longAverage[3] = {0, 0, 0};
 
 uint16_t shortSamples[3][SHORT_SIZE];       // Used to create an average of the most recent samples
 uint8_t averageIndex[3] = {0, 0, 0};
-bool triggered[3] = {false};
 
 void SetOutput(short fsr, bool state)
 {
+    static bool triggered[3] = {false};
+
+    triggered[fsr] = state;
     digitalWrite(fsrLeds[fsr], state ? HIGH : LOW);
+
+    bool any = false;
+    for (uint8_t fsr = 0; fsr < 3; fsr++)
+    {
+        any |= triggered[fsr];
+    }
+
+    digitalWrite(LEDTRIGGER, any ? LOW : HIGH);
 }
 
 void InitValues()
@@ -88,7 +100,7 @@ uint16_t UpdateLongSamples(short fsr, int avg)
     }
 
     longSamples[fsr][longIndex[fsr]++] = avg;
-    if (longIndex[fsr] > LONG_SIZE)
+    if (longIndex[fsr] >= LONG_SIZE)
     {
         longIndex[fsr] = 0;
     }
@@ -116,7 +128,7 @@ void CalculateThreshold(short fsr)
 
     uint16_t longAverage = UpdateLongSamples(fsr, value);
 
-    uint16_t threshold = 0.9 * longAverage;
+    uint16_t threshold = 0.92 * longAverage;
 
     bool triggered = value < threshold;
     SetOutput(fsr, triggered);
@@ -124,16 +136,15 @@ void CalculateThreshold(short fsr)
 
 void loop()
 {
-    for (short fsr = 0; fsr < 3; fsr++)
+    for (uint8_t fsr = 0; fsr < 3; fsr++)
     {
         int value = analogRead(fsrPins[fsr]);
+
         shortSamples[fsr][averageIndex[fsr]++] = value;
         if (averageIndex[fsr] >= SHORT_SIZE)
-            averageIndex[fsr] = 0;
-
-        if (averageIndex[fsr] == 7)
         {
             CalculateThreshold(fsr);
+            averageIndex[fsr] = 0;
         }
     }
 };
