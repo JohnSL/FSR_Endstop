@@ -5,6 +5,7 @@
 #define LED2        12
 #define LED3        11
 #define LEDTRIGGER  10
+#define ENDSTOP     03
 
 // Define the pins used for the analog inputs that have the FSRs attached. These have external
 // 10K pull-up resistors.
@@ -44,6 +45,7 @@ void SetOutput(short fsr, bool state)
     }
 
     digitalWrite(LEDTRIGGER, any ? LOW : HIGH);
+    digitalWrite(ENDSTOP, any ? HIGH : LOW);
 }
 
 void InitValues()
@@ -85,6 +87,10 @@ void setup()
     // off whenever we trigger the end stop.
     pinMode(LEDTRIGGER, OUTPUT);
     digitalWrite(LEDTRIGGER, HIGH);
+
+    // Set the endstop pin to be an output that is set for NC
+    pinMode(ENDSTOP, OUTPUT);
+    digitalWrite(ENDSTOP, LOW);
 };
 
 //
