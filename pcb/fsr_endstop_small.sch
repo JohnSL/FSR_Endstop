@@ -553,20 +553,21 @@ Source: http://www.fairchildsemi.com/ds/MB/MB6S.pdf</description>
 <part name="LED2" library="_sg_lib" deviceset="LED0603" device=""/>
 <part name="LED3" library="_sg_lib" deviceset="LED0603" device=""/>
 <part name="LED4" library="_sg_lib" deviceset="LED0603" device=""/>
-<part name="R1" library="_sg_lib" deviceset="RES0603" device=""/>
-<part name="R2" library="_sg_lib" deviceset="RES0603" device=""/>
-<part name="R3" library="_sg_lib" deviceset="RES0603" device=""/>
-<part name="R4" library="_sg_lib" deviceset="RES0603" device=""/>
+<part name="R1" library="_sg_lib" deviceset="RES0603" device="" value="100"/>
+<part name="R2" library="_sg_lib" deviceset="RES0603" device="" value="100"/>
+<part name="R3" library="_sg_lib" deviceset="RES0603" device="" value="100"/>
+<part name="R4" library="_sg_lib" deviceset="RES0603" device="" value="100"/>
 <part name="R5" library="_sg_lib" deviceset="RES0603" device="" value="10k"/>
 <part name="R6" library="_sg_lib" deviceset="RES0603" device="" value="10k"/>
 <part name="R7" library="_sg_lib" deviceset="RES0603" device="" value="10k"/>
-<part name="IO1" library="_sg_lib" deviceset="PIN" device="1.2MM"/>
-<part name="IO2" library="_sg_lib" deviceset="PIN" device="1.2MM"/>
-<part name="IO3" library="_sg_lib" deviceset="PIN" device="1.2MM"/>
+<part name="SN2" library="_sg_lib" deviceset="PIN" device="1.2MM"/>
+<part name="SN1" library="_sg_lib" deviceset="PIN" device="1.2MM"/>
+<part name="NC" library="_sg_lib" deviceset="PIN" device="1.2MM"/>
+<part name="GND2" library="_sg_lib" deviceset="PIN" device="1.2MM"/>
 <part name="GND" library="_sg_lib" deviceset="PIN" device="1.2MM"/>
-<part name="VCC" library="_sg_lib" deviceset="PIN" device="1.2MM"/>
 <part name="C2" library="_sg_lib" deviceset="CAP0603" device="" value="1uF"/>
 <part name="B1" library="rectifier" deviceset="MB*S" device="" technology="6"/>
+<part name="GND1" library="_sg_lib" deviceset="PIN" device="1.2MM"/>
 </parts>
 <sheets>
 <sheet>
@@ -596,13 +597,14 @@ Source: http://www.fairchildsemi.com/ds/MB/MB6S.pdf</description>
 <instance part="R5" gate="G$1" x="81.28" y="76.2" rot="R90"/>
 <instance part="R6" gate="G$1" x="101.6" y="76.2" rot="R90"/>
 <instance part="R7" gate="G$1" x="121.92" y="76.2" rot="R90"/>
-<instance part="IO1" gate="G$1" x="167.64" y="68.58" rot="R270"/>
-<instance part="IO2" gate="G$1" x="162.56" y="68.58" rot="R270"/>
-<instance part="IO3" gate="G$1" x="157.48" y="68.58" rot="R270"/>
-<instance part="GND" gate="G$1" x="149.86" y="68.58" rot="R270"/>
-<instance part="VCC" gate="G$1" x="142.24" y="68.58" rot="R270"/>
+<instance part="SN2" gate="G$1" x="167.64" y="68.58" rot="R270"/>
+<instance part="SN1" gate="G$1" x="162.56" y="68.58" rot="R270"/>
+<instance part="NC" gate="G$1" x="157.48" y="68.58" rot="R270"/>
+<instance part="GND2" gate="G$1" x="149.86" y="68.58" rot="R270"/>
+<instance part="GND" gate="G$1" x="142.24" y="68.58" rot="R270"/>
 <instance part="C2" gate="G$1" x="45.72" y="86.36"/>
 <instance part="B1" gate="G$1" x="25.4" y="109.22"/>
+<instance part="GND1" gate="G$1" x="175.26" y="68.58" rot="R270"/>
 </instances>
 <busses>
 </busses>
@@ -654,10 +656,7 @@ Source: http://www.fairchildsemi.com/ds/MB/MB6S.pdf</description>
 <junction x="101.6" y="78.74"/>
 <pinref part="R7" gate="G$1" pin="P$2"/>
 <label x="111.76" y="78.74" size="1.778" layer="95"/>
-<pinref part="VCC" gate="G$1" pin="P$1"/>
-<wire x1="48.26" y1="60.96" x2="142.24" y2="60.96" width="0.1524" layer="91"/>
-<wire x1="142.24" y1="60.96" x2="142.24" y2="63.5" width="0.1524" layer="91"/>
-<label x="132.08" y="60.96" size="1.778" layer="95"/>
+<label x="45.72" y="60.96" size="1.778" layer="95"/>
 <pinref part="C2" gate="G$1" pin="P$2"/>
 <junction x="48.26" y="86.36"/>
 <wire x1="48.26" y1="86.36" x2="48.26" y2="109.22" width="0.1524" layer="91"/>
@@ -699,11 +698,13 @@ Source: http://www.fairchildsemi.com/ds/MB/MB6S.pdf</description>
 <wire x1="88.9" y1="83.82" x2="88.9" y2="81.28" width="0.1524" layer="91"/>
 <junction x="88.9" y="81.28"/>
 <label x="114.3" y="81.28" size="1.778" layer="95"/>
-<pinref part="GND" gate="G$1" pin="P$1"/>
-<wire x1="43.18" y1="58.42" x2="149.86" y2="58.42" width="0.1524" layer="91"/>
+<pinref part="GND2" gate="G$1" pin="P$1"/>
+<wire x1="43.18" y1="58.42" x2="142.24" y2="58.42" width="0.1524" layer="91"/>
+<wire x1="142.24" y1="58.42" x2="149.86" y2="58.42" width="0.1524" layer="91"/>
 <wire x1="149.86" y1="58.42" x2="149.86" y2="63.5" width="0.1524" layer="91"/>
 <label x="132.08" y="58.42" size="1.778" layer="95"/>
-<wire x1="149.86" y1="58.42" x2="193.04" y2="58.42" width="0.1524" layer="91"/>
+<wire x1="149.86" y1="58.42" x2="175.26" y2="58.42" width="0.1524" layer="91"/>
+<wire x1="175.26" y1="58.42" x2="193.04" y2="58.42" width="0.1524" layer="91"/>
 <wire x1="193.04" y1="58.42" x2="193.04" y2="43.18" width="0.1524" layer="91"/>
 <junction x="149.86" y="58.42"/>
 <pinref part="LED1" gate="G$1" pin="-"/>
@@ -722,6 +723,12 @@ Source: http://www.fairchildsemi.com/ds/MB/MB6S.pdf</description>
 <wire x1="17.78" y1="96.52" x2="17.78" y2="109.22" width="0.1524" layer="91"/>
 <pinref part="B1" gate="G$1" pin="-"/>
 <wire x1="17.78" y1="109.22" x2="20.32" y2="109.22" width="0.1524" layer="91"/>
+<pinref part="GND" gate="G$1" pin="P$1"/>
+<wire x1="142.24" y1="63.5" x2="142.24" y2="58.42" width="0.1524" layer="91"/>
+<junction x="142.24" y="58.42"/>
+<pinref part="GND1" gate="G$1" pin="P$1"/>
+<wire x1="175.26" y1="63.5" x2="175.26" y2="58.42" width="0.1524" layer="91"/>
+<junction x="175.26" y="58.42"/>
 </segment>
 </net>
 <net name="N$1" class="0">
@@ -840,7 +847,7 @@ Source: http://www.fairchildsemi.com/ds/MB/MB6S.pdf</description>
 <segment>
 <pinref part="U1" gate="G$1" pin="8_PB5_ADC6/OC1D/CLK0/XTAL2/PCINT13"/>
 <wire x1="38.1" y1="53.34" x2="167.64" y2="53.34" width="0.1524" layer="91"/>
-<pinref part="IO1" gate="G$1" pin="P$1"/>
+<pinref part="SN2" gate="G$1" pin="P$1"/>
 <wire x1="167.64" y1="53.34" x2="167.64" y2="63.5" width="0.1524" layer="91"/>
 </segment>
 </net>
@@ -848,7 +855,7 @@ Source: http://www.fairchildsemi.com/ds/MB/MB6S.pdf</description>
 <segment>
 <pinref part="U1" gate="G$1" pin="7_PB4_ADC7/OC1D#/CLKI/XTAL1/PCINT12"/>
 <wire x1="38.1" y1="55.88" x2="162.56" y2="55.88" width="0.1524" layer="91"/>
-<pinref part="IO2" gate="G$1" pin="P$1"/>
+<pinref part="SN1" gate="G$1" pin="P$1"/>
 <wire x1="162.56" y1="55.88" x2="162.56" y2="63.5" width="0.1524" layer="91"/>
 </segment>
 </net>
@@ -885,7 +892,7 @@ Source: http://www.fairchildsemi.com/ds/MB/MB6S.pdf</description>
 <pinref part="U1" gate="G$1" pin="4_PB3_OC1B/PCINT11"/>
 <wire x1="38.1" y1="63.5" x2="139.7" y2="63.5" width="0.1524" layer="91"/>
 <wire x1="139.7" y1="63.5" x2="139.7" y2="48.26" width="0.1524" layer="91"/>
-<pinref part="IO3" gate="G$1" pin="P$1"/>
+<pinref part="NC" gate="G$1" pin="P$1"/>
 <wire x1="139.7" y1="48.26" x2="157.48" y2="48.26" width="0.1524" layer="91"/>
 <wire x1="157.48" y1="48.26" x2="157.48" y2="63.5" width="0.1524" layer="91"/>
 </segment>
@@ -893,6 +900,12 @@ Source: http://www.fairchildsemi.com/ds/MB/MB6S.pdf</description>
 </nets>
 </sheet>
 </sheets>
+<errors>
+<approved hash="113,1,181.889,43.7981,R1,,,,,"/>
+<approved hash="113,1,181.889,36.1781,R2,,,,,"/>
+<approved hash="113,1,181.889,28.5581,R3,,,,,"/>
+<approved hash="113,1,181.889,20.9381,R4,,,,,"/>
+</errors>
 </schematic>
 </drawing>
 </eagle>
