@@ -1,3 +1,21 @@
+// Pin layout copied from pins.arduino.h for convience
+//
+// ATMEL ATTINY861
+//
+//                   +-\/-+
+//      (D  9) PB0  1|    |20  PA0 (D  0)
+//     *(D  8) PB1  2|    |19  PA1 (D  1)
+//      (D  7) PB2  3|    |18  PA2 (D  2) INT1
+//     *(D  6) PB3  4|    |17  PA3 (D 14)
+//             VCC  5|    |16  AGND
+//             GND  6|    |15  AVCC
+//      (D  5) PB4  7|    |14  PA4 (D 10)
+//     *(D  4) PB5  8|    |13  PA5 (D 11)
+// INT0 (D  3) PB6  9|    |12  PA6 (D 12)
+//      (D 15) PB7 10|    |11  PA7 (D 13)
+//                   +----+
+//
+
 // Define the pins that have LEDs on them. We have one LED for each of the three FSRs to indicate
 // when each FSR is triggered. And one power/end stop LED that is on until any of the FSRs are
 // triggered.
@@ -15,6 +33,9 @@
 
 // The end stop output
 #define TRIGGER     03
+#define TRIGGERED   LOW
+#define UNTRIGGERED HIGH
+#define THRESHOLD   0.85
 
 short fsrLeds[] = { LED1, LED2, LED3 };     // Pins for each of the LEDs next to the FSR inputs
 short fsrPins[] = { FSR1, FSR2, FSR3 };     // Pins for each of the FSR analog inputs
@@ -45,7 +66,7 @@ void SetOutput(short fsr, bool state)
     }
 
     digitalWrite(LEDTRIGGER, any ? LOW : HIGH);
-    digitalWrite(ENDSTOP, any ? HIGH : LOW);
+    digitalWrite(ENDSTOP, any ? TRIGGERED : UNTRIGGERED);
 }
 
 void InitValues()
@@ -90,7 +111,7 @@ void setup()
 
     // Set the endstop pin to be an output that is set for NC
     pinMode(ENDSTOP, OUTPUT);
-    digitalWrite(ENDSTOP, LOW);
+    digitalWrite(ENDSTOP, UNTRIGGERED);
 };
 
 //
@@ -134,7 +155,7 @@ void CalculateThreshold(short fsr)
 
     uint16_t longAverage = UpdateLongSamples(fsr, value);
 
-    uint16_t threshold = 0.92 * longAverage;
+    uint16_t threshold = THRESHOLD * longAverage;
 
     bool triggered = value < threshold;
     SetOutput(fsr, triggered);
