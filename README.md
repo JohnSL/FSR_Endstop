@@ -13,3 +13,9 @@ I had a devel of a time getting it to work. It took a little head scratching, an
 
 ## FSR Endstop Controller
 Although not a clever name, it certainly describes what this board does. To use the board, you connect a cable to the endstop on your printer board, and then you connect three FSRs to the inputs of the board. And that's it. The board receives power from the printer board and automatically adjusts to the ambient pressure on the sensors. Whenever the head hits the build plate, the board will detect this and trigger the end stop.
+
+To date, we've made two different versions of the board. Revision 1.1 is shown on the left, and 1.2 is on the right:
+
+![Board Versions](https://github.com/JohnSL/FSR_Endstop/raw/master/Photos/P7131966_Cropped_1000_Marked.jpg)
+
+The difference between these two is the arrangement of pins that can be used to modify the behavior of the board. In the revision 1.1 board, these pins are labeld IO1, IO2, and IO3. While the same pins are labeled SN2, SN1, and NC on the revision 1.2 boards. Additionally, the 1.2 boards allow you to solder in a 2 by 3 array of header pins and then use jumpers to connect any combination of these three pins to ground (GND), whereas the 1.1 boards require using wires to connect any combination of these pins to GND.
