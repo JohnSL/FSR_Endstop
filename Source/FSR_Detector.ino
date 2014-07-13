@@ -162,12 +162,18 @@ void setup()
 // Returns: The current long-range average
 uint16_t UpdateLongSamples(short fsr, int avg)
 {
+    //
+    // If enough time hasn't passed, just return the last value
+    //
     unsigned long current = millis();
     if (current - lastLongTime[fsr] <= LONG_INTERVAL)
     {
         return longAverage[fsr];
     }
 
+    //
+    // Update the log sample with the new value, and then update the long average
+    //
     longSamples[fsr][longIndex[fsr]++] = avg;
     if (longIndex[fsr] >= LONG_SIZE)
     {
@@ -187,7 +193,8 @@ uint16_t UpdateLongSamples(short fsr, int avg)
 }
 
 //
-// Returns the current threshold ot use, baed on jumpers installed
+// Returns the current threshold to use, baed on jumpers installed
+//
 inline float GetThreshold()
 {
     int sen1 = digitalRead(SEN1);
@@ -197,20 +204,27 @@ inline float GetThreshold()
     return thresholds[index];
 }
 
-void CalculateThreshold(short fsr)
+//
+// This method is called after every sample to see if the output trigger status should be changed.
+// It will also the short sample buffer, and it may update the long-term samples.
+//
+void CheckIfTriggered(short fsr)
 {
-    uint16_t avg = 0;
+    //
+    // Calculate the average of the most recent short-term samples
+    //
+    uint16_t total = 0;
     for (int i = 0; i < SHORT_SIZE; i++)
     {
-        avg += shortSamples[fsr][i];
+        total += shortSamples[fsr][i];
     }
-    uint16_t value = avg / SHORT_SIZE;
+    uint16_t avg = total / SHORT_SIZE;
 
-    uint16_t longAverage = UpdateLongSamples(fsr, value);
+    uint16_t longAverage = UpdateLongSamples(fsr, avg);
 
     uint16_t threshold = GetThreshold() * longAverage;
 
-    bool triggered = value < threshold;
+    bool triggered = avg < threshold;
     SetOutput(fsr, triggered);
 }
 
@@ -223,9 +237,9 @@ void loop()
         shortSamples[fsr][averageIndex[fsr]++] = value;
         if (averageIndex[fsr] >= SHORT_SIZE)
         {
-            CalculateThreshold(fsr);
             averageIndex[fsr] = 0;
         }
+        CheckIfTriggered(fsr);
     }
 };
 
