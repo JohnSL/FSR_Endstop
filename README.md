@@ -5,7 +5,7 @@ Force-Sensitive Resistor controller designed for Delta 3D printers for automatic
 
 
 ## History
-Back in Februray 2014, Johann modified the Marlin firmware to allow using force sensitive resistors (FSRs) to allow the firmware to locate the print surface by moving the print nozzle down until the firmware detected that it was touching the bed. FSRs have a very high resistance until you apply pressure, at which point the resistance drops very quickly. You can find more information about his work here: http://reprap.org/wiki/FSR.
+Back in Februray 2014, Johann modified the Marlin firmware to support force sensitive resistors (FSRs) to allow the firmware to locate the print surface by moving the print nozzle down until the firmware detected that it was touching the bed. FSRs have a very high resistance until you apply pressure, at which point the resistance drops very quickly. You can find more information about his work here: http://reprap.org/wiki/FSR.
 
 I built my own delta printer (http://trains.socha.com/2013/11/building-3dr-simple-delta-printer-part-i.html) and decided to try FSRs. Johann's original branch used one of the thermister inputs, but he later changed to using one of the standard endstop inputs, which I learned when I talked to him at the Seattle Mini Makerfaire. So I tried the endstops.
 
@@ -28,3 +28,16 @@ The difference between these two is the arrangement of pins that can be used to 
 
 ### Wiring the Endstop
 Use a three-wire cable to connect the endstop on your printer board to this circuit board. These should be connected to the three pins labeled "+/-", "+/-", and "SIG" in the upper-left corner of the image above. On all the printer boards I've looked at, the signal wire is on the outside. The 5V connection is either on the middle pin or the outside pin. You'll want to check your printer board to ensure you attach the connector with the correct orientation.
+
+### Setting the Sensitivity
+There are two jumpers  you can use to modify the sensitivy of this board. By default (no jumpers), the force much be such that the voltage drops below 0.92 of the ambient value before the output is triggered. Each FSR is monitored independently of the others, so the output will trigger when at least one FSR triggers an input. In the table below, GND means you've connected that pin to ground.
+
+| SN1 / IO2 | SN2 / IO1 | Sensitivity |
+|-----------|-----------|-------------|
+| GND | GND | 0.8 |
+| GND |  -  | 0.85 |
+|  -  | GND | 0.95 |
+|  -  |  -  | 0.92 |
+
+### Setting NC/NO Behavior
+By default, the end stop output will be normally open (NO), which should work fine with any printer. However if you want to change this to normally closed (NC), connect pin NC/IO3 to GND.
