@@ -27,4 +27,4 @@ To date, we've made two different versions of the board. Revision 1.1 is shown o
 The difference between these two is the arrangement of pins that can be used to modify the behavior of the board. In the revision 1.1 board, these pins are labeld IO1, IO2, and IO3. While the same pins are labeled SN2, SN1, and NC on the revision 1.2 boards. Additionally, the 1.2 boards allow you to solder in a 2 by 3 array of header pins and then use jumpers to connect any combination of these three pins to ground (GND), whereas the 1.1 boards require using wires to connect any combination of these pins to GND.
 
 ### Wiring the Endstop
-Use a three-wire cable to connect the endstop on your printer board to this circuit board. 
+Use a three-wire cable to connect the endstop on your printer board to this circuit board. These should be connected to the three pins labeled "+/-", "+/-", and "SIG" in the upper-left corner of the image above. On all the printer boards I've looked at, the signal wire is on the outside. The 5V connection is either on the middle pin or the outside pin. You'll want to check your printer board to ensure you attach the connector with the correct orientation.
