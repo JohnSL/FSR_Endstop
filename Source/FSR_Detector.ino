@@ -17,6 +17,8 @@
 //                             +----+
 //
 
+#define VERSION     1
+
 // Define the pins that have LEDs on them. We have one LED for each of the three FSRs to indicate
 // when each FSR is triggered. And one power/end stop LED that is on until any of the FSRs are
 // triggered.
@@ -125,6 +127,23 @@ void InitializeJumpers()
 }
 
 //
+// Briefly turns on FSR LEDs during startup to indicate the version number of the
+// firmware.
+//
+void BlinkVersion(uint8_t version)
+{
+    for (uint8_t i = 0; i < 3; i++)
+    {
+        digitalWrite(fsrLeds[i], (version & (1 << i)) ? HIGH : LOW);
+    }
+    delay(250);
+    for (uint8_t i = 0; i < 3; i++)
+    {
+        digitalWrite(fsrLeds[i], LOW);
+    }
+}
+
+//
 // One-time setup for the various I/O ports
 //
 void setup()
@@ -154,6 +173,8 @@ void setup()
 
     // Set the jumpers to use the internal pull-up resiter and be for input
     InitializeJumpers();
+
+    BlinkVersion(VERSION);
 };
 
 //
