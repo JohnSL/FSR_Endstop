@@ -25,15 +25,21 @@
 #define LED1        13
 #define LED2        12
 #define LED3        11
+//#define LED4        9
 
 #define LEDTRIGGER  10
 #define ENDSTOP     3
+
+#define SENSORNUM   3
+
 
 // Define the pins used for the analog inputs that have the FSRs attached. These have external
 // 10K pull-up resistors.
 #define FSR1        A0
 #define FSR2        A1
 #define FSR3        A2
+//#define FSR4        A3
+
 
 // Jumper pins, which are labels IO3, IO2, and IO1 on the revision 1.1 boards. On the
 // revision 1.2 boards, these are labeled NC, SN1, and SN2
@@ -57,24 +63,29 @@ const float thresholds[] = { 0.80, 0.85, 0.95, 0.92 };
 short fsrLeds[] = { LED1, LED2, LED3 };     // Pins for each of the LEDs next to the FSR inputs
 short fsrPins[] = { FSR1, FSR2, FSR3 };     // Pins for each of the FSR analog inputs
 
+//short fsrLeds[] = { LED1, LED2, LED3, LED4 };     // Pins for each of the LEDs next to the FSR inputs
+//short fsrPins[] = { FSR1, FSR2, FSR3, FSR4 };     // Pins for each of the FSR analog inputs
+
+
+
 #define SHORT_SIZE 8
 #define LONG_SIZE 16
 #define LONG_INTERVAL (2000 / LONG_SIZE)
 
-unsigned long lastLongTime[3];              // Last time in millis that we captured a long-term sample
-uint16_t longSamples[3][LONG_SIZE];         // Used to keep a long-term average
-uint8_t longIndex[3] = {0, 0, 0};           // Index of the last long-term sample
-uint16_t longAverage[3] = {0, 0, 0};
+unsigned long lastLongTime[SENSORNUM];              // Last time in millis that we captured a long-term sample
+uint16_t longSamples[SENSORNUM][LONG_SIZE];         // Used to keep a long-term average
+uint8_t longIndex[SENSORNUM];                       // Index of the last long-term sample
+uint16_t longAverage[SENSORNUM];
 
-uint16_t shortSamples[3][SHORT_SIZE];       // Used to create an average of the most recent samples
-uint8_t averageIndex[3] = {0, 0, 0};
+uint16_t shortSamples[SENSORNUM][SHORT_SIZE];       // Used to create an average of the most recent samples
+uint8_t averageIndex[SENSORNUM];
 
 //
 // Set the triggered state based on the state of one FSR
 //
 void SetOutput(short fsr, bool state)
 {
-    static bool triggered[3] = {false};     // Keeps track of current FSR trigger state, initiall not triggered
+    static bool triggered[SENSORNUM] = {false};     // Keeps track of current FSR trigger state, initiall not triggered
 
     // Turns on the FSR LED when that FSR is triggered
     triggered[fsr] = state;
@@ -82,7 +93,7 @@ void SetOutput(short fsr, bool state)
 
     // See if any of the FSRs are currently triggered
     bool any = false;
-    for (uint8_t fsr = 0; fsr < 3; fsr++)
+    for (uint8_t fsr = 0; fsr < SENSORNUM; fsr++)
     {
         any |= triggered[fsr];
     }
@@ -106,7 +117,7 @@ void SetOutput(short fsr, bool state)
 
 void InitValues()
 {
-    for (uint8_t fsr = 0; fsr < 3; fsr++)
+    for (uint8_t fsr = 0; fsr < SENSORNUM; fsr++)
     {
         for (uint8_t i = 0; i < SHORT_SIZE; i++)
             shortSamples[fsr][i] = 0;
@@ -115,7 +126,7 @@ void InitValues()
             longSamples[fsr][i] = 0;
     }
 
-    for (uint8_t fsr = 0; fsr < 3; fsr++)
+    for (uint8_t fsr = 0; fsr < SENSORNUM; fsr++)
         lastLongTime[fsr] = millis();
 }
 
@@ -132,12 +143,12 @@ void InitializeJumpers()
 //
 void BlinkVersion(uint8_t version)
 {
-    for (uint8_t i = 0; i < 3; i++)
+    for (uint8_t i = 0; i < SENSORNUM; i++)
     {
         digitalWrite(fsrLeds[i], (version & (1 << i)) ? HIGH : LOW);
     }
     delay(250);
-    for (uint8_t i = 0; i < 3; i++)
+    for (uint8_t i = 0; i < SENSORNUM; i++)
     {
         digitalWrite(fsrLeds[i], LOW);
     }
@@ -150,8 +161,13 @@ void setup()
 {
     InitValues();
 
-    for (uint8_t fsr = 0; fsr < 3; fsr++)
+    for (uint8_t fsr = 0; fsr < SENSORNUM; fsr++)
     {
+    
+        longIndex[fsr]    = 0;
+        longAverage[fsr]  = 0;
+        averageIndex[fsr] = 0;
+        
         // Set the FSR LEDs for output and turn them off
         uint8_t pin = fsrLeds[fsr];
         pinMode(pin, OUTPUT);
@@ -251,7 +267,7 @@ void CheckIfTriggered(short fsr)
 
 void loop()
 {
-    for (uint8_t fsr = 0; fsr < 3; fsr++)
+    for (uint8_t fsr = 0; fsr < SENSORNUM; fsr++)
     {
         int value = analogRead(fsrPins[fsr]);
 
