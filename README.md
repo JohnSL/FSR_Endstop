@@ -5,7 +5,11 @@ Force-Sensitive Resistor controller designed for Delta 3D printers for automatic
 
 
 ## Availability
-These circuit boards are now available for purchase from [Tridprinting.com](http://www.tridprinting.com/Electronics/#3D-Printer-FSR).
+These circuit boards are now available for purchase from here:
+
+[Tridprinting.com](http://www.tridprinting.com/Electronics/#3D-Printer-FSR).
+
+You can find my blog post about having these manufactured here: http://trains.socha.com/2014/09/manufacturing-fsr-endstop-controller.html
 
 ## History
 Back in Februray 2014, Johann modified the Marlin firmware to support force sensitive resistors (FSRs) to allow the firmware to locate the print surface by moving the print nozzle down until the firmware detected that it was touching the bed. FSRs have a very high resistance until you apply pressure, at which point the resistance drops very quickly. You can find more information about his work here: http://reprap.org/wiki/FSR.
