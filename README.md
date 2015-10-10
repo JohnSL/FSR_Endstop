@@ -7,7 +7,8 @@ Force-Sensitive Resistor controller designed for Delta 3D printers for automatic
 ## Availability
 These circuit boards are now available for purchase from here:
 
-[Tridprinting.com](http://www.tridprinting.com/Electronics/#3D-Printer-FSR).
+* [Tridprinting.com](http://www.tridprinting.com/Electronics/#3D-Printer-FSR)
+* [UltiBots.com](http://www.ultibots.com/fsr-leveling)
 
 You can find my blog post about having these manufactured here: http://trains.socha.com/2014/09/manufacturing-fsr-endstop-controller.html
 
