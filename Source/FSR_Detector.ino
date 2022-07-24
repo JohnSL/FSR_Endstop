@@ -1,11 +1,33 @@
+// Pin layout copied from pins.arduino.h for convience, and then added how the pins are
+// connected on the circuit board.
+//
+// ATMEL ATTINY861
+//
+//                             +-\/-+
+// MOSI           (D  9) PB0  1|    |20  PA0 (D  0)           FSR1
+// MISO          *(D  8) PB1  2|    |19  PA1 (D  1)           FSR2
+// SCK            (D  7) PB2  3|    |18  PA2 (D  2) INT1      FSR3
+// NC/IO3        *(D  6) PB3  4|    |17  PA3 (D 14)
+//                       VCC  5|    |16  AGND
+//                       GND  6|    |15  AVCC
+// SN1/IO2        (D  5) PB4  7|    |14  PA4 (D 10)           LED4
+// SN2/IO1       *(D  4) PB5  8|    |13  PA5 (D 11)           LED3
+// SIG       INT0 (D  3) PB6  9|    |12  PA6 (D 12)           LED2
+// RST            (D 15) PB7 10|    |11  PA7 (D 13)           LED1
+//                             +----+
+//
+
+#define VERSION     1
+
 // Define the pins that have LEDs on them. We have one LED for each of the three FSRs to indicate
 // when each FSR is triggered. And one power/end stop LED that is on until any of the FSRs are
 // triggered.
 #define LED1        13
 #define LED2        12
 #define LED3        11
+
 #define LEDTRIGGER  10
-#define ENDSTOP     03
+#define ENDSTOP     3
 
 // Define the pins used for the analog inputs that have the FSRs attached. These have external
 // 10K pull-up resistors.
@@ -13,8 +35,24 @@
 #define FSR2        A1
 #define FSR3        A2
 
+// Jumper pins, which are labels IO3, IO2, and IO1 on the revision 1.1 boards. On the
+// revision 1.2 boards, these are labeled NC, SN1, and SN2
+#define NC_PIN      6
+#define SEN1        5
+#define SEN2        4
+
 // The end stop output
 #define TRIGGER     03
+#define TRIGGERED   LOW
+#define UNTRIGGERED HIGH
+
+//  SEN1    SEN2    Threshold
+//  ----    ----    ---------
+//   0       0          0.80
+//   0       1          0.85
+//   1       0          0.95
+//   1       1          0.92
+const float thresholds[] = { 0.80, 0.85, 0.95, 0.92 };
 
 short fsrLeds[] = { LED1, LED2, LED3 };     // Pins for each of the LEDs next to the FSR inputs
 short fsrPins[] = { FSR1, FSR2, FSR3 };     // Pins for each of the FSR analog inputs
@@ -31,13 +69,18 @@ uint16_t longAverage[3] = {0, 0, 0};
 uint16_t shortSamples[3][SHORT_SIZE];       // Used to create an average of the most recent samples
 uint8_t averageIndex[3] = {0, 0, 0};
 
+//
+// Set the triggered state based on the state of one FSR
+//
 void SetOutput(short fsr, bool state)
 {
-    static bool triggered[3] = {false};
+    static bool triggered[3] = {false};     // Keeps track of current FSR trigger state, initiall not triggered
 
+    // Turns on the FSR LED when that FSR is triggered
     triggered[fsr] = state;
     digitalWrite(fsrLeds[fsr], state ? HIGH : LOW);
 
+    // See if any of the FSRs are currently triggered
     bool any = false;
     for (uint8_t fsr = 0; fsr < 3; fsr++)
     {
@@ -45,7 +88,20 @@ void SetOutput(short fsr, bool state)
     }
 
     digitalWrite(LEDTRIGGER, any ? LOW : HIGH);
-    digitalWrite(ENDSTOP, any ? HIGH : LOW);
+
+    // For the end stop, we need to check the NC jumpper to see if we need to invert
+    // the output.
+    int ncPin = digitalRead(NC_PIN);
+    if (ncPin == 1)
+    {
+        // No jumper installed, so use Normally Closed
+        digitalWrite(ENDSTOP, any ? LOW : HIGH);
+    }
+    else
+    {
+        // Jumper installed, so use Normally Open
+        digitalWrite(ENDSTOP, any ? HIGH: LOW);
+    }
 }
 
 void InitValues()
@@ -61,6 +117,30 @@ void InitValues()
 
     for (uint8_t fsr = 0; fsr < 3; fsr++)
         lastLongTime[fsr] = millis();
+}
+
+void InitializeJumpers()
+{
+    pinMode(NC_PIN, INPUT_PULLUP);
+    pinMode(SEN1, INPUT_PULLUP);
+    pinMode(SEN2, INPUT_PULLUP);
+}
+
+//
+// Briefly turns on FSR LEDs during startup to indicate the version number of the
+// firmware.
+//
+void BlinkVersion(uint8_t version)
+{
+    for (uint8_t i = 0; i < 3; i++)
+    {
+        digitalWrite(fsrLeds[i], (version & (1 << i)) ? HIGH : LOW);
+    }
+    delay(250);
+    for (uint8_t i = 0; i < 3; i++)
+    {
+        digitalWrite(fsrLeds[i], LOW);
+    }
 }
 
 //
@@ -90,7 +170,11 @@ void setup()
 
     // Set the endstop pin to be an output that is set for NC
     pinMode(ENDSTOP, OUTPUT);
-    digitalWrite(ENDSTOP, LOW);
+
+    // Set the jumpers to use the internal pull-up resiter and be for input
+    InitializeJumpers();
+
+    BlinkVersion(VERSION);
 };
 
 //
@@ -99,12 +183,18 @@ void setup()
 // Returns: The current long-range average
 uint16_t UpdateLongSamples(short fsr, int avg)
 {
+    //
+    // If enough time hasn't passed, just return the last value
+    //
     unsigned long current = millis();
     if (current - lastLongTime[fsr] <= LONG_INTERVAL)
     {
         return longAverage[fsr];
     }
 
+    //
+    // Update the log sample with the new value, and then update the long average
+    //
     longSamples[fsr][longIndex[fsr]++] = avg;
     if (longIndex[fsr] >= LONG_SIZE)
     {
@@ -123,20 +213,39 @@ uint16_t UpdateLongSamples(short fsr, int avg)
     return longAverage[fsr];
 }
 
-void CalculateThreshold(short fsr)
+//
+// Returns the current threshold to use, baed on jumpers installed
+//
+inline float GetThreshold()
 {
-    uint16_t avg = 0;
+    int sen1 = digitalRead(SEN1);
+    int sen2 = digitalRead(SEN2);
+
+    int index = sen1 << 1 | sen2;
+    return thresholds[index];
+}
+
+//
+// This method is called after every sample to see if the output trigger status should be changed.
+// It will also the short sample buffer, and it may update the long-term samples.
+//
+void CheckIfTriggered(short fsr)
+{
+    //
+    // Calculate the average of the most recent short-term samples
+    //
+    uint16_t total = 0;
     for (int i = 0; i < SHORT_SIZE; i++)
     {
-        avg += shortSamples[fsr][i];
+        total += shortSamples[fsr][i];
     }
-    uint16_t value = avg / SHORT_SIZE;
+    uint16_t avg = total / SHORT_SIZE;
 
-    uint16_t longAverage = UpdateLongSamples(fsr, value);
+    uint16_t longAverage = UpdateLongSamples(fsr, avg);
 
-    uint16_t threshold = 0.92 * longAverage;
+    uint16_t threshold = GetThreshold() * longAverage;
 
-    bool triggered = value < threshold;
+    bool triggered = avg < threshold;
     SetOutput(fsr, triggered);
 }
 
@@ -149,9 +258,9 @@ void loop()
         shortSamples[fsr][averageIndex[fsr]++] = value;
         if (averageIndex[fsr] >= SHORT_SIZE)
         {
-            CalculateThreshold(fsr);
             averageIndex[fsr] = 0;
         }
+        CheckIfTriggered(fsr);
     }
 };
 

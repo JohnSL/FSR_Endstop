@@ -117,7 +117,7 @@
 <hole x="30.48" y="40.64" drill="3.2"/>
 <text x="25.8064" y="17.78" size="2.1844" layer="22" font="vector" rot="MR90">FSR Endstop</text>
 <text x="21.844" y="17.78" size="2.1844" layer="22" font="vector" rot="MR90">Controller</text>
-<text x="18.1356" y="17.78" size="2.1844" layer="22" font="vector" rot="MR90">rev1.1</text>
+<text x="18.1356" y="17.78" size="2.1844" layer="22" font="vector" rot="MR90">rev1.2</text>
 </plain>
 <libraries>
 <library name="_sg_misc">
@@ -315,8 +315,20 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <class number="0" name="default" width="0" drill="0">
 </class>
 </classes>
-<designrules name="LaenPCBOrder">
-<description language="en">&lt;b&gt;EAGLE Design Rules&lt;/b&gt;
+<designrules name="DFRobot_Eagle_Rule_v0.4">
+<description language="en">
+
+&lt;b&gt;EAGLE Design Rules&lt;/b&gt;
+&lt;p&gt;
+The default Design Rules have been set to cover
+a wide range of applications. Your particular design
+may have different requirements, so please make the
+necessary adjustments and save your customized
+design rules under a new name.
+</description>
+<description language="it">
+
+&lt;b&gt;EAGLE Design Rules&lt;/b&gt;
 &lt;p&gt;
 The default Design Rules have been set to cover
 a wide range of applications. Your particular design
@@ -324,25 +336,25 @@ may have different requirements, so please make the
 necessary adjustments and save your customized
 design rules under a new name.</description>
 <param name="layerSetup" value="(1*16)"/>
-<param name="mtCopper" value="0.035559375mm 0.035559375mm 0.035559375mm 0.035559375mm 0.035559375mm 0.035559375mm 0.035559375mm 0.035559375mm 0.035559375mm 0.035559375mm 0.035559375mm 0.035559375mm 0.035559375mm 0.035559375mm 0.035559375mm 0.035559375mm"/>
-<param name="mtIsolate" value="1.501140625mm 0.149859375mm 0.200659375mm 0.149859375mm 0.200659375mm 0.149859375mm 0.200659375mm 0.149859375mm 0.200659375mm 0.149859375mm 0.200659375mm 0.149859375mm 0.200659375mm 0.149859375mm 0.200659375mm"/>
+<param name="mtCopper" value="0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm 0.035mm"/>
+<param name="mtIsolate" value="1.5mm 0.15mm 0.2mm 0.15mm 0.2mm 0.15mm 0.2mm 0.15mm 0.2mm 0.15mm 0.2mm 0.15mm 0.2mm 0.15mm 0.2mm"/>
 <param name="mdWireWire" value="6mil"/>
 <param name="mdWirePad" value="6mil"/>
 <param name="mdWireVia" value="6mil"/>
 <param name="mdPadPad" value="6mil"/>
 <param name="mdPadVia" value="6mil"/>
 <param name="mdViaVia" value="6mil"/>
-<param name="mdSmdPad" value="6mil"/>
-<param name="mdSmdVia" value="6mil"/>
-<param name="mdSmdSmd" value="6mil"/>
+<param name="mdSmdPad" value="0mil"/>
+<param name="mdSmdVia" value="0mil"/>
+<param name="mdSmdSmd" value="0mil"/>
 <param name="mdViaViaSameLayer" value="8mil"/>
 <param name="mnLayersViaInSmd" value="2"/>
-<param name="mdCopperDimension" value="15mil"/>
-<param name="mdDrill" value="6mil"/>
+<param name="mdCopperDimension" value="10mil"/>
+<param name="mdDrill" value="10mil"/>
 <param name="mdSmdStop" value="0mil"/>
 <param name="msWidth" value="6mil"/>
-<param name="msDrill" value="13mil"/>
-<param name="msMicroVia" value="13mil"/>
+<param name="msDrill" value="12mil"/>
+<param name="msMicroVia" value="12mil"/>
 <param name="msBlindViaRatio" value="0.5"/>
 <param name="rvPadTop" value="0.25"/>
 <param name="rvPadInner" value="0.25"/>
@@ -351,15 +363,15 @@ design rules under a new name.</description>
 <param name="rvViaInner" value="0.25"/>
 <param name="rvMicroViaOuter" value="0.25"/>
 <param name="rvMicroViaInner" value="0.25"/>
-<param name="rlMinPadTop" value="7mil"/>
+<param name="rlMinPadTop" value="12mil"/>
 <param name="rlMaxPadTop" value="20mil"/>
-<param name="rlMinPadInner" value="7mil"/>
+<param name="rlMinPadInner" value="10mil"/>
 <param name="rlMaxPadInner" value="20mil"/>
-<param name="rlMinPadBottom" value="7mil"/>
+<param name="rlMinPadBottom" value="12mil"/>
 <param name="rlMaxPadBottom" value="20mil"/>
-<param name="rlMinViaOuter" value="7mil"/>
+<param name="rlMinViaOuter" value="8mil"/>
 <param name="rlMaxViaOuter" value="20mil"/>
-<param name="rlMinViaInner" value="7mil"/>
+<param name="rlMinViaInner" value="8mil"/>
 <param name="rlMaxViaInner" value="20mil"/>
 <param name="rlMinMicroViaOuter" value="4mil"/>
 <param name="rlMaxMicroViaOuter" value="20mil"/>
@@ -372,8 +384,8 @@ design rules under a new name.</description>
 <param name="psElongationOffset" value="100"/>
 <param name="mvStopFrame" value="1"/>
 <param name="mvCreamFrame" value="0"/>
-<param name="mlMinStopFrame" value="4mil"/>
-<param name="mlMaxStopFrame" value="4mil"/>
+<param name="mlMinStopFrame" value="2mil"/>
+<param name="mlMaxStopFrame" value="2mil"/>
 <param name="mlMinCreamFrame" value="0mil"/>
 <param name="mlMaxCreamFrame" value="0mil"/>
 <param name="mlViaStopLimit" value="25mil"/>
@@ -510,7 +522,11 @@ design rules under a new name.</description>
 </element>
 <element name="FSR3A" library="_sg_lib" package="PIN_1.2MM" value="PIN1.2MM" x="38.1" y="17.78" smashed="yes" rot="R180"/>
 <element name="AVR1" library="_sg_misc" package="AVR6" value="AVR6" x="20.32" y="38.1" smashed="yes"/>
-<element name="C1" library="_sg_lib" package="0603" value="1uF" x="20.32" y="26.67" rot="R90"/>
+<element name="C1" library="_sg_lib" package="0603" value="1uF" x="20.32" y="26.67" smashed="yes" rot="R90">
+<attribute name="NAME" x="20.4312" y="28.129" size="0.4064" layer="25" font="vector" rot="R90"/>
+<attribute name="NAME" x="20.22" y="25.87" size="0.3048" layer="51" font="vector" rot="R90"/>
+<attribute name="VALUE" x="20.62" y="25.87" size="0.3048" layer="51" font="vector" rot="R90"/>
+</element>
 <element name="LED1" library="_sg_lib" package="0603_DIODE" value="LED0603" x="36.195" y="36.195" rot="R90"/>
 <element name="LED2" library="_sg_lib" package="0603_DIODE" value="LED0603" x="36.195" y="27.305" smashed="yes" rot="R90">
 <attribute name="NAME" x="35.495" y="26.605" size="0.4064" layer="25" font="vector" rot="R90"/>
@@ -519,22 +535,22 @@ design rules under a new name.</description>
 </element>
 <element name="LED3" library="_sg_lib" package="0603_DIODE" value="LED0603" x="36.195" y="18.415" rot="R90"/>
 <element name="LED4" library="_sg_lib" package="0603_DIODE" value="LED0603" x="25.1206" y="13.97"/>
-<element name="R1" library="_sg_lib" package="0603" value="" x="36.195" y="38.735" smashed="yes" rot="R270">
+<element name="R1" library="_sg_lib" package="0603" value="100" x="36.195" y="38.735" smashed="yes" rot="R270">
 <attribute name="NAME" x="35.0678" y="39.3334" size="0.4064" layer="25" font="vector" rot="R270"/>
 <attribute name="NAME" x="36.295" y="39.535" size="0.3048" layer="51" font="vector" rot="R270"/>
 <attribute name="VALUE" x="35.895" y="39.535" size="0.3048" layer="51" font="vector" rot="R270"/>
 </element>
-<element name="R2" library="_sg_lib" package="0603" value="" x="36.195" y="29.845" smashed="yes" rot="R270">
+<element name="R2" library="_sg_lib" package="0603" value="100" x="36.195" y="29.845" smashed="yes" rot="R270">
 <attribute name="NAME" x="35.1694" y="30.037" size="0.4064" layer="25" font="vector" rot="R270"/>
 <attribute name="NAME" x="36.295" y="30.645" size="0.3048" layer="51" font="vector" rot="R270"/>
 <attribute name="VALUE" x="35.895" y="30.645" size="0.3048" layer="51" font="vector" rot="R270"/>
 </element>
-<element name="R3" library="_sg_lib" package="0603" value="" x="36.195" y="20.955" smashed="yes" rot="R270">
+<element name="R3" library="_sg_lib" package="0603" value="100" x="36.195" y="20.955" smashed="yes" rot="R270">
 <attribute name="NAME" x="35.0678" y="20.9438" size="0.4064" layer="25" font="vector" rot="R270"/>
 <attribute name="NAME" x="36.295" y="21.755" size="0.3048" layer="51" font="vector" rot="R270"/>
 <attribute name="VALUE" x="35.895" y="21.755" size="0.3048" layer="51" font="vector" rot="R270"/>
 </element>
-<element name="R4" library="_sg_lib" package="0603" value="" x="25.8826" y="16.51" smashed="yes" rot="R270">
+<element name="R4" library="_sg_lib" package="0603" value="100" x="25.8826" y="16.51" smashed="yes" rot="R270">
 <attribute name="NAME" x="24.7554" y="16.8036" size="0.4064" layer="25" font="vector" rot="R270"/>
 <attribute name="NAME" x="25.9826" y="17.31" size="0.3048" layer="51" font="vector" rot="R270"/>
 <attribute name="VALUE" x="25.5826" y="17.31" size="0.3048" layer="51" font="vector" rot="R270"/>
@@ -546,17 +562,17 @@ design rules under a new name.</description>
 <attribute name="NAME" x="38" y="22.06" size="0.3048" layer="51" font="vector" rot="R90"/>
 <attribute name="VALUE" x="38.4" y="22.06" size="0.3048" layer="51" font="vector" rot="R90"/>
 </element>
-<element name="IO1" library="_sg_lib" package="PIN_1.2MM" value="PIN1.2MM" x="16.51" y="24.13" smashed="yes">
-<attribute name="NAME" x="18.796" y="22.8346" size="1.016" layer="21" font="vector" rot="R180"/>
+<element name="SN2" library="_sg_lib" package="PIN_1.2MM" value="PIN1.2MM" x="16.51" y="24.13" smashed="yes">
+<attribute name="NAME" x="17.9578" y="24.638" size="1.016" layer="21" font="vector" rot="R270"/>
 </element>
-<element name="IO2" library="_sg_lib" package="PIN_1.2MM" value="PIN1.2MM" x="16.51" y="26.67" smashed="yes">
-<attribute name="NAME" x="18.9404" y="25.63" size="1.016" layer="21" font="vector" rot="R90"/>
+<element name="SN1" library="_sg_lib" package="PIN_1.2MM" value="PIN1.2MM" x="16.51" y="26.67" smashed="yes">
+<attribute name="NAME" x="19.042" y="25.5284" size="1.016" layer="21" font="vector" rot="R90"/>
 </element>
-<element name="IO3" library="_sg_lib" package="PIN_1.2MM" value="PIN1.2MM" x="16.51" y="29.21" smashed="yes">
-<attribute name="NAME" x="18.796" y="31.5722" size="1.016" layer="21" font="vector" rot="R180"/>
+<element name="NC" library="_sg_lib" package="PIN_1.2MM" value="PIN1.2MM" x="16.51" y="29.21" smashed="yes">
+<attribute name="NAME" x="18.0086" y="30.5562" size="1.016" layer="21" font="vector" rot="R270"/>
 </element>
-<element name="GND" library="_sg_lib" package="PIN_1.2MM" value="PIN1.2MM" x="13.97" y="26.67" rot="R270"/>
-<element name="VCC" library="_sg_lib" package="PIN_1.2MM" value="PIN1.2MM" x="13.97" y="29.21" rot="R90"/>
+<element name="GND2" library="_sg_lib" package="PIN_1.2MM" value="PIN1.2MM" x="13.97" y="26.67" smashed="yes" rot="R270"/>
+<element name="GND" library="_sg_lib" package="PIN_1.2MM" value="PIN1.2MM" x="13.97" y="29.21" rot="R90"/>
 <element name="C2" library="_sg_lib" package="0603" value="1uF" x="34.29" y="26.67" smashed="yes" rot="R270">
 <attribute name="NAME" x="34.3012" y="25.1364" size="0.4064" layer="25" font="vector"/>
 <attribute name="NAME" x="34.39" y="27.47" size="0.3048" layer="51" font="vector" rot="R270"/>
@@ -566,6 +582,7 @@ design rules under a new name.</description>
 <attribute name="NAME" x="19.685" y="13.6144" size="0.8128" layer="25" font="vector"/>
 </element>
 <element name="U$1" library="SparkFun-Aesthetics" package="OSHW-LOGO-M" value="" x="31.1912" y="27.0256" rot="MR90"/>
+<element name="GND1" library="_sg_lib" package="PIN_1.2MM" value="PIN1.2MM" x="13.97" y="24.13" smashed="yes"/>
 </elements>
 <signals>
 <signal name="N$3">
@@ -587,7 +604,6 @@ design rules under a new name.</description>
 <contactref element="R5" pad="2"/>
 <contactref element="R6" pad="2"/>
 <contactref element="R7" pad="2"/>
-<contactref element="VCC" pad="P$1"/>
 <contactref element="C2" pad="2"/>
 <wire x1="24.7904" y1="17.0896" x2="24.7904" y2="25.908" width="0.4064" layer="1"/>
 <wire x1="24.7904" y1="25.908" x2="24.7904" y2="26.416" width="0.4064" layer="1"/>
@@ -603,10 +619,6 @@ design rules under a new name.</description>
 <wire x1="24.9174" y1="26.035" x2="24.7904" y2="25.908" width="0.4064" layer="1"/>
 <wire x1="32.385" y1="26.035" x2="34.125" y2="26.035" width="0.4064" layer="1"/>
 <wire x1="34.125" y1="26.035" x2="34.29" y2="25.87" width="0.4064" layer="1"/>
-<wire x1="20.32" y1="27.47" x2="18.4532" y2="27.47" width="0.3048" layer="1"/>
-<wire x1="18.4532" y1="27.47" x2="17.9832" y2="27.94" width="0.3048" layer="1"/>
-<wire x1="17.9832" y1="27.94" x2="15.24" y2="27.94" width="0.3048" layer="1"/>
-<wire x1="15.24" y1="27.94" x2="13.97" y2="29.21" width="0.3048" layer="1"/>
 <wire x1="34.29" y1="25.87" x2="34.3788" y2="25.87" width="0.3048" layer="1"/>
 <wire x1="34.3788" y1="25.87" x2="34.9504" y2="25.2984" width="0.3048" layer="1"/>
 <wire x1="34.9504" y1="25.2984" x2="36.4616" y2="25.2984" width="0.3048" layer="1"/>
@@ -631,7 +643,7 @@ design rules under a new name.</description>
 <contactref element="FSR3A" pad="P$1"/>
 <contactref element="FSR2A" pad="P$1"/>
 <contactref element="FSR1A" pad="P$1"/>
-<contactref element="GND" pad="P$1"/>
+<contactref element="GND2" pad="P$1"/>
 <contactref element="LED1" pad="-"/>
 <contactref element="LED2" pad="-"/>
 <contactref element="LED3" pad="-"/>
@@ -655,10 +667,12 @@ design rules under a new name.</description>
 <via x="29.7942" y="18.8468" extent="1-16" drill="0.6"/>
 <via x="27.0256" y="23.9776" extent="1-16" drill="0.6"/>
 <via x="28.448" y="30.2768" extent="1-16" drill="0.6"/>
-<via x="18.8976" y="16.3576" extent="1-16" drill="0.6"/>
+<via x="19.6088" y="17.0688" extent="1-16" drill="0.6"/>
 <via x="34.036" y="24.5872" extent="1-16" drill="0.6"/>
 <via x="28.829" y="36.5252" extent="1-16" drill="0.6"/>
 <contactref element="B1" pad="-"/>
+<contactref element="GND" pad="P$1"/>
+<contactref element="GND1" pad="P$1"/>
 </signal>
 <signal name="N$1">
 <contactref element="U1" pad="P$1"/>
@@ -791,7 +805,7 @@ design rules under a new name.</description>
 </signal>
 <signal name="N$16">
 <contactref element="U1" pad="P$8"/>
-<contactref element="IO1" pad="P$1"/>
+<contactref element="SN2" pad="P$1"/>
 <wire x1="22.225" y1="23.495" x2="18.161" y2="23.495" width="0.2032" layer="1"/>
 <wire x1="18.161" y1="23.495" x2="17.5768" y2="24.0792" width="0.2032" layer="1"/>
 <wire x1="17.5768" y1="24.0792" x2="16.5608" y2="24.0792" width="0.2032" layer="1"/>
@@ -799,7 +813,7 @@ design rules under a new name.</description>
 </signal>
 <signal name="N$17">
 <contactref element="U1" pad="P$7"/>
-<contactref element="IO2" pad="P$1"/>
+<contactref element="SN1" pad="P$1"/>
 <wire x1="22.225" y1="24.765" x2="18.415" y2="24.765" width="0.2032" layer="1"/>
 <wire x1="18.415" y1="24.765" x2="16.51" y2="26.67" width="0.2032" layer="1"/>
 </signal>
@@ -825,7 +839,7 @@ design rules under a new name.</description>
 </signal>
 <signal name="N$15">
 <contactref element="U1" pad="P$4"/>
-<contactref element="IO3" pad="P$1"/>
+<contactref element="NC" pad="P$1"/>
 <wire x1="22.225" y1="28.575" x2="18.3642" y2="28.575" width="0.2032" layer="1"/>
 <wire x1="18.3642" y1="28.575" x2="17.78" y2="29.1592" width="0.2032" layer="1"/>
 <wire x1="17.78" y1="29.1592" x2="16.5608" y2="29.1592" width="0.2032" layer="1"/>
@@ -833,18 +847,71 @@ design rules under a new name.</description>
 </signal>
 </signals>
 <errors>
-<approved hash="4,1,958868766745dfc2"/>
-<approved hash="4,1,00dce0811ef2feeb"/>
-<approved hash="4,1,488fb8f14625b6db"/>
-<approved hash="4,1,fe47d87a6a256965"/>
-<approved hash="4,1,5c34b4164a4aa240"/>
-<approved hash="4,1,3d37d5182b4dc342"/>
-<approved hash="4,16,958868766745dfc2"/>
-<approved hash="4,16,5c34b4164a4aa240"/>
-<approved hash="4,16,3d37d5182b4dc342"/>
-<approved hash="4,16,fe47d87a6a256965"/>
-<approved hash="4,16,00dce0811ef2feeb"/>
-<approved hash="4,16,488fb8f14625b6db"/>
+<approved hash="18,29,d91e9ab29ab2c51e"/>
+<approved hash="18,29,c51e9ab21ab2391e"/>
+<approved hash="18,29,3cf7a55ba55620fa"/>
+<approved hash="18,29,c0f7255ba5563cfa"/>
+<approved hash="18,29,2a282b21e1319cae"/>
+<approved hash="18,29,976e941a1aa66374"/>
+<approved hash="18,29,5e70ff45ff385e63"/>
+<approved hash="18,29,5e70ffa5ffb05e67"/>
+<approved hash="18,29,7ad0daa3dab07aad"/>
+<approved hash="18,29,7a30daa3dab47a25"/>
+<approved hash="18,29,c24fa3e222c7a26b"/>
+<approved hash="18,29,224fa71c2639c26a"/>
+<approved hash="18,29,a457e2fa63fbc457"/>
+<approved hash="18,29,c4a9e6fa67fa24a9"/>
+<approved hash="18,29,a3f42558275583f9"/>
+<approved hash="18,29,c3f7bd5a2357a3fb"/>
+<approved hash="18,29,7a1d18b11ab15a1d"/>
+<approved hash="18,29,2ebaaed674584b09"/>
+<approved hash="18,29,23bcf52bf53ed0a5"/>
+<approved hash="18,29,154e17be9be3503a"/>
+<approved hash="18,29,5a1f1cb282b33a1f"/>
+<approved hash="18,29,7c183632f72aa200"/>
+<approved hash="18,29,6005d3bf03ba8c18"/>
+<approved hash="18,29,db4d8b7b51d4b36e"/>
+<approved hash="18,29,223c8b1951d64a01"/>
+<approved hash="18,29,76d40b2951d69ef6"/>
+<approved hash="18,29,a67e6dd27ed7827b"/>
+<approved hash="18,29,827e6dd1e2d7a67b"/>
+<approved hash="18,29,c536fda2430ad86a"/>
+<approved hash="18,29,84523efe2dfaa056"/>
+<approved hash="18,29,a051a2fe2dfa8456"/>
+<approved hash="18,29,a64e6de27ec6826a"/>
+<approved hash="18,29,824e6de1e2c6a66a"/>
+<approved hash="18,29,919e7dd243650cf2"/>
+<approved hash="18,29,84523efe2dfaa056"/>
+<approved hash="18,29,a051a2fe2dfa8456"/>
+<approved hash="18,29,84763eda2dd9a075"/>
+<approved hash="18,29,a075a2da2dd98475"/>
+<approved hash="18,29,84763eda2dc6a06a"/>
+<approved hash="18,29,a075a2da2dc6846a"/>
+<approved hash="18,29,a69e6d327e36829a"/>
+<approved hash="18,29,829e6d31e236a69a"/>
+<approved hash="18,29,a64e6de27ec7826b"/>
+<approved hash="18,29,824e6de1e2c7a66b"/>
+<approved hash="18,29,a64e6de27ec1826d"/>
+<approved hash="18,29,824e6de1e2c1a66d"/>
+<approved hash="18,29,84723ede2ddaa076"/>
+<approved hash="18,29,a071a2de2dda8476"/>
+<approved hash="18,29,84723ede2ddba077"/>
+<approved hash="18,29,a071a2de2ddb8477"/>
+<approved hash="18,29,a6926d3e7e398295"/>
+<approved hash="18,29,82926d3de239a695"/>
+<approved hash="18,29,3c67fde04356215b"/>
+<approved hash="18,29,c4f2635ee342a4ee"/>
+<approved hash="18,29,a4f2e75ee742a4ee"/>
+<approved hash="18,29,c4f2635ee356a4fa"/>
+<approved hash="18,29,a4f2e75ee756a4fa"/>
+<approved hash="18,29,a2f2235ea342c2ee"/>
+<approved hash="18,29,a2f2275e2742a2ee"/>
+<approved hash="18,29,a2d2237ea342c2ee"/>
+<approved hash="18,29,a2d2277e2742a2ee"/>
+<approved hash="18,29,a293233fa332c29e"/>
+<approved hash="18,29,a293273f2732a29e"/>
+<approved hash="18,29,c4d6637ae346a4ea"/>
+<approved hash="18,29,a4d6e77ae746a4ea"/>
 </errors>
 </board>
 </drawing>
